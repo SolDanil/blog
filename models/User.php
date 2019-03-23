@@ -29,7 +29,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['isAdmin'], 'integer'],
+            [['isAdmin','role_id'], 'integer'],
             [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
         ];
     }
@@ -45,6 +45,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password' => 'Password',
             'isAdmin' => 'Is Admin',
             'photo' => 'Photo',
+            'role_id'=>'Role ID'
         ];
     }
     /**
@@ -85,6 +86,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function create()
     {
+
         return $this->save(false);
     }
 
@@ -106,5 +108,42 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getImage()
     {
         return $this->photo;
+    }
+    public function getRoles()
+    {
+        return $this->hasOne(Role::className(), ['id' => 'role_id']);
+    }
+
+    public function getSelectedRoles()
+    {
+        $selectedIds = $this->getRoles()->select('id')->asArray()->all();
+        return ArrayHelper::getColumn($selectedIds, 'id');
+    }
+
+    public function saveRoles($role_id)
+    {
+        $role = Role::findOne($role_id);
+        if($role != null)
+        {
+            $this->link('role', $role);
+            return true;
+        }
+    }
+
+    public function isAdmin($user_id){
+
+        $user=User::findOne($user_id);
+        if ($user->roles->name=='admin')
+            return true;
+        else
+            return false;
+    }
+    public function isAuthor($user_id){
+
+        $user=User::findOne($user_id);
+        if ($user->roles->name=='author')
+            return true;
+        else
+            return false;
     }
 }

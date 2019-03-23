@@ -3,8 +3,10 @@ namespace app\controllers;
 use app\models\LoginForm;
 use app\models\SignupForm;
 use app\models\User;
+use app\models\Role;
 use Yii;
 use yii\web\Controller;
+use yii\helpers\ArrayHelper;
 class AuthController extends Controller
 {
     public function actionLogin()
@@ -33,6 +35,8 @@ class AuthController extends Controller
 
     public function actionSignup()
     {
+        $roles=ArrayHelper::map(Role::find()->where(['not', ['id' => 1]])->select('id,name')->asArray()->all(), 'id', 'name');
+
         $model = new SignupForm();
         if(Yii::$app->request->isPost)
         {
@@ -42,7 +46,7 @@ class AuthController extends Controller
                 return $this->redirect(['auth/login']);
             }
         }
-        return $this->render('signup', ['model'=>$model]);
+        return $this->render('signup', ['model'=>$model,'roles'=>$roles]);
     }
     public function actionLoginVk($uid, $first_name, $photo)
     {
@@ -55,8 +59,7 @@ class AuthController extends Controller
 
     public function actionTest()
     {
-        $user = User::findOne(1);
-        Yii::$app->user->logout();
+        $user=User::findOne(Yii::$app->user->id);
 
         if(Yii::$app->user->isGuest)
         {
@@ -64,7 +67,12 @@ class AuthController extends Controller
         }
         else
         {
-            echo 'Пользователь Авторизован';
+            print_r('Пользователь '.$user->roles->name.' Авторизован:') ;
+            echo '<pre>';
+            print_r($user->roles->name);
+            echo '</pre>';
+
+
         }
     }
 }

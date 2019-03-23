@@ -49,6 +49,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return Category::find()->all();
     }
+    public function getImage()
+    {
+        return ($this->image) ? '/uploads/' . $this->image : '/no-image.png';
+    }
 
     public static function getArticlesByCategory($id)
     {

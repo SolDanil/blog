@@ -24,6 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]); ?>
 
+
+<!--                --><?//= Html::dropDownList('role_id', '', $roles, ['class'=>'form-control']) ?>
+
+                <?=$form->field($model, 'role_id')->dropdownList($roles, ['prompt'=>'Select Role'] );?>
+
                 <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
 
                 <?= $form->field($model, 'email')->textInput() ?>

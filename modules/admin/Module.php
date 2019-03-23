@@ -2,6 +2,7 @@
 namespace app\modules\admin;
 use Yii;
 use yii\filters\AccessControl;
+use app\models\User;
 /**
  * admin module definition class
  */
@@ -30,7 +31,8 @@ class Module extends \yii\base\Module
                         'allow' =>  true,
                         'matchCallback' =>  function($rule, $action)
                         {
-                            return Yii::$app->user->identity->isAdmin;
+                            return User::isAdmin(Yii::$app->user->id);
+//                                Yii::$app->user->identity->isAdmin;
                         }
                     ]
                 ]

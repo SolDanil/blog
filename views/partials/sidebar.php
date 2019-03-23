@@ -28,7 +28,7 @@ use yii\helpers\Url;
             <?php foreach($recent as $article):?>
                 <div class="thumb-latest-posts">
                     <div class="media">
-                        <div class="media-left">
+                        <div class="media-left" style="width: 40%;">
                             <a href="<?= Url::toRoute(['site/view','id'=>$article->id]);?>" class="popular-img"><img src="<?= $article->getImage();?>" alt="">
                                 <div class="p-overlay"></div>
                             </a>

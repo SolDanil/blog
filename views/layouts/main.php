@@ -8,6 +8,8 @@ use yii\bootstrap\NavBar;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
+use app\models\Menu;
 PublicAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -42,9 +44,13 @@ PublicAsset::register($this);
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav text-uppercase">
-                        <li><a data-toggle="dropdown" class="dropdown-toggle" href="/">Home</a>
+<!--                        --><?// print_r(Menu::find()->asArray()->all());die;
+
+                        foreach ( Menu::find()->asArray()->all() as $menu ){ ?>
+                        <li><a data-toggle="dropdown" class="dropdown-toggle" href="<?=$menu['url']?>"><?=$menu['title']?></a>
 
                         </li>
+                        <? }?>
                     </ul>
                     <div class="i_con">
                         <ul class="nav navbar-nav text-uppercase">
@@ -52,12 +58,23 @@ PublicAsset::register($this);
                                 <li><a href="<?= Url::toRoute(['auth/login'])?>">Login</a></li>
                                 <li><a href="<?= Url::toRoute(['auth/signup'])?>">Register</a></li>
                             <?php else: ?>
-                                <?= Html::beginForm(['/auth/logout'], 'post')
+                                <?php if(User::isAuthor(Yii::$app->user->id)):?>
+
+                                    <li><a class="btn btn-link logout" style="padding-top:10px;" href="<?= Url::toRoute(['author/default/index'])?>">Cabinet</a></li>
+
+                                <?php endif;?>
+                                <?php if(User::isAdmin(Yii::$app->user->id)):?>
+                                    <li><a class="btn btn-link logout" style="padding-top:10px;" href="<?= Url::toRoute(['admin/default/index'])?>">Cabinet</a></li>
+
+
+                                <?php endif;?>
+
+                            <li><?= Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
                                     'Logout (' . Yii::$app->user->identity->name . ')',
-                                    ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;"]
+                                    ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;margin: 7px 0px;"]
                                 )
-                                . Html::endForm() ?>
+                                . Html::endForm() ?></li>
                             <?php endif;?>
                         </ul>
                     </div>

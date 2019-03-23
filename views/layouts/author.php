@@ -33,14 +33,10 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Home', 'url' => ['/admin/default/index']],
-                ['label' => 'Articles', 'url' => ['/admin/article/index']],
-                ['label' => 'Commentaries', 'url' => ['/admin/comment/index']],
-                ['label' => 'Categories', 'url' => ['/admin/category/index']],
-                ['label' => 'Users', 'url' => ['/admin/user/index']],
-                ['label' => 'Roles', 'url' => ['/admin/role/index']],
-                ['label' => 'Menu', 'url' => ['/admin/menu/index']],
-                ['label' => 'Tag', 'url' => ['/admin/tag/index']]
+                ['label' => 'Home', 'url' => ['/author/default/index']],
+                ['label' => 'Articles', 'url' => ['/author/article/index']],
+
+
             ],
         ]);
         NavBar::end();

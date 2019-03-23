@@ -43,4 +43,9 @@ class Role extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+    public function getUsers()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])
+            ->viaTable('user_role', ['role_id' => 'id']);
+    }
 }

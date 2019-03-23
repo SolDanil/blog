@@ -14,8 +14,6 @@ class m190321_121534_create_article_table extends Migration
     {
         $this->createTable('{{%article}}', [
             'id' => $this->primaryKey(),
-            'active'=>$this->tinyInteger(4),
-            'lang'=>$this->string(),
             'title'=>$this->string(),
             'discription'=>$this->text(),
             'content'=>$this->text(),

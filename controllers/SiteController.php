@@ -93,20 +93,33 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionCategory($id)
+    public function actionCategory($id=0)
     {
-        $data = Category::getArticlesByCategory($id);
-        $popular = Article::getPopular();
-        $recent = Article::getRecent();
-        $categories = Category::getAll();
+        if ($id==0){
+            $popular = Article::getPopular();
+            $recent = Article::getRecent();
+            $categories = Category::getAll();
+            return $this->render('categorys',[
+                'popular'=>$popular,
+                'recent'=>$recent,
+                'categories'=>$categories
+            ]);
 
-        return $this->render('category',[
-            'articles'=>$data['articles'],
-            'pagination'=>$data['pagination'],
-            'popular'=>$popular,
-            'recent'=>$recent,
-            'categories'=>$categories
-        ]);
+
+        }else{
+            $data = Category::getArticlesByCategory($id);
+            $popular = Article::getPopular();
+            $recent = Article::getRecent();
+            $categories = Category::getAll();
+
+            return $this->render('category',[
+                'articles'=>$data['articles'],
+                'pagination'=>$data['pagination'],
+                'popular'=>$popular,
+                'recent'=>$recent,
+                'categories'=>$categories
+            ]);
+        }
     }
     public function actionComment($id)
     {
@@ -121,5 +134,12 @@ class SiteController extends Controller
                 return $this->redirect(['site/view','id'=>$id]);
             }
         }
+    }
+    public function actionContact(){
+
+        return $this->render('contact',[]);
+    }
+    public function actionAbout(){
+        return $this->render('about',[]);
     }
 }

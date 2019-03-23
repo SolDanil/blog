@@ -38,7 +38,7 @@ class Article extends \yii\db\ActiveRecord
             [['title'], 'required'],
             [['title','description','content'], 'string'],
             [['date'], 'date', 'format'=>'php:Y-m-d'],
-            [['date'], 'default', 'value' => date('Y-m-d')],
+//            [['date'], 'default', 'value' => date("Y-m-d")],
             [['title'], 'string', 'max' => 255],
             [['category_id'], 'number']
         ];
@@ -64,6 +64,8 @@ class Article extends \yii\db\ActiveRecord
     public function saveArticle()
     {
         $this->user_id = Yii::$app->user->id;
+        $this->date=date('Y-m-d');
+
         return $this->save(false);
     }
     public function saveImage($filename)
@@ -178,5 +180,24 @@ class Article extends \yii\db\ActiveRecord
     {
         $this->viewed += 1;
         return $this->save(false);
+    }
+
+    public function sendMail($email){
+        $body="<h1> Новое статья на блоге</h1>
+                    <ul> 
+                    <li>id статьи:".$this->id."</li>
+                    <li>Заголовок:".$this->title."</li>
+                    <li>Пользователь:".$this->user_id."</li>
+                    <li>Время:".$this->date."</li>
+                    
+                    
+                    </ul>";
+        Yii::$app->mailer->compose()
+            ->setTo($email)
+            ->setFrom('st_nikon@mail.ru')
+            ->setSubject('Новая статья на блоге')
+            ->setTextBody($body)
+            ->send();
+
     }
 }

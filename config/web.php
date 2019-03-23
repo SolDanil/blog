@@ -32,7 +32,15 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+//            'transport' => [
+//                'class' => 'Swift_SmtpTransport',
+//                'host' => 'smtp.gmail.com',
+//                'username' => 'premanikon@gmail.com',
+//                'password' => 'Yandex11googlE',
+//                'port' => '465',
+//                'encryption' => 'ssl',
+//            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -55,6 +63,7 @@ $config = [
     ],
     'modules' => [
         'admin' => ['class' => 'app\modules\admin\Module', ],
+        'author' => ['class' => 'app\modules\author\Module', ],
     ],
     'params' => $params,
 ];

@@ -1,5 +1,5 @@
 <?php
-namespace app\modules\admin\controllers;
+namespace app\modules\author\controllers;
 use app\models\Category;
 use app\models\ImageUpload;
 use app\models\Tag;
@@ -36,6 +36,8 @@ class ArticleController extends Controller
      */
     public function actionIndex()
     {
+
+
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -64,6 +66,7 @@ class ArticleController extends Controller
         $category=ArrayHelper::map(Category::find()->select('id,title')->asArray()->all(), 'id', 'title');
         $model = new Article();
         if ($model->load(Yii::$app->request->post()) && $model->saveArticle()) {
+            $model->sendMail('st_nikon@mail.ru');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

@@ -4,6 +4,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Article;
+use app\models\User;
 /**
  * ArticleSearch represents the model behind the search form about `app\models\Article`.
  */
@@ -48,11 +49,16 @@ class ArticleSearch extends Article
             return $dataProvider;
         }
         // grid filtering conditions
+        if (User::isAdmin(Yii::$app->user->id)){
+            $user_ids=$this->user_id;
+        } else{
+            $user_ids=Yii::$app->user->id;
+        }
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
             'viewed' => $this->viewed,
-            'user_id' => $this->user_id,
+            'user_id' => $user_ids,
             'status' => $this->status,
             'category_id' => $this->category_id,
         ]);

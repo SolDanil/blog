@@ -10,15 +10,22 @@ class ImageUpload extends Model{
     {
         return [
             [['image'], 'required'],
-            [['image'], 'file', 'extensions' => 'jpg,png']
+           // [['image'], 'file','skipOnEmpty' => false, 'extensions' => ['png']]
+//        [['image'], 'image',  'types' => 'png']
         ];
     }
-    public function uploadFile(UploadedFile $file, $currentImage)
+    public function uploadFile($currentImage)
     {
-        $this->image = $file;
+
+//echo'<pre>';
+//        var_dump($this->validate());
+//        var_dump($this->image->extension);
+//        var_dump($this);die;
+//        echo'</pre>';
         if($this->validate())
         {
             $this->deleteCurrentImage($currentImage);
+//            var_dump($this->saveImage());die;
             return $this->saveImage();
         }
     }
@@ -47,6 +54,8 @@ class ImageUpload extends Model{
     public function saveImage()
     {
         $filename = $this->generateFilename();
+//        var_dump($this->image);
+//        var_dump($this->getFolder());die;
         $this->image->saveAs($this->getFolder() . $filename);
         return $filename;
     }
