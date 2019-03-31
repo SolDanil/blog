@@ -122,6 +122,11 @@ class ArticleController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    /**
+     * Если есть данные POST, то сохраняем файл и перенаправляем на страницу статьи.
+     * Если данных POST нет, то загружаем форму для загрузки файла.
+     * @param integer $id      
+     */
     public function actionSetImage($id)
     {
         $model = new ImageUpload;
@@ -137,7 +142,12 @@ class ArticleController extends Controller
 
         return $this->render('image', ['model'=>$model]);
     }
-
+    /**
+     * По данным $id получаем, данные статьи 
+     * Если есть данные POST, то сохраняем категорию и перенаправляем на страницу статьи.
+     * Если данных POST нет, то загружаем форму для настройки категории.
+     * @param integer $id      
+     */
     public function actionSetCategory($id)
     {
         $article = $this->findModel($id);
@@ -157,10 +167,16 @@ class ArticleController extends Controller
             'categories'=>$categories
         ]);
     }
+    /**
+     * По данным $id получаем, данные статьи 
+     * Если есть данные POST, то сохраняем тэги и перенаправляем на страницу статьи.
+     * Если данных POST нет, то загружаем форму для настройки тэгов.
+     * @param integer $id      
+     */
     public function actionSetTags($id)
     {
         $article = $this->findModel($id);
-        $selectedTags = $article->getSelectedTags(); //
+        $selectedTags = $article->getSelectedTags(); // нвыбранные теги для данной статьи
         $tags = ArrayHelper::map(Tag::find()->all(), 'id', 'title');
         if(Yii::$app->request->isPost)
         {

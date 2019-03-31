@@ -24,7 +24,7 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
         NavBar::begin([
-            'brandLabel' => 'My Company',
+            'brandLabel' => 'Мой Блог',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
@@ -33,14 +33,15 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Home', 'url' => ['/admin/default/index']],
-                ['label' => 'Articles', 'url' => ['/admin/article/index']],
-                ['label' => 'Commentaries', 'url' => ['/admin/comment/index']],
-                ['label' => 'Categories', 'url' => ['/admin/category/index']],
-                ['label' => 'Users', 'url' => ['/admin/user/index']],
-                ['label' => 'Roles', 'url' => ['/admin/role/index']],
-                ['label' => 'Menu', 'url' => ['/admin/menu/index']],
-                ['label' => 'Tag', 'url' => ['/admin/tag/index']]
+                ['label' => 'Главная', 'url' => ['/admin/default/index']],
+                ['label' => 'Статьи', 'url' => ['/admin/article/index']],
+                ['label' => 'Комментарии', 'url' => ['/admin/comment/index']],
+                ['label' => 'Категории', 'url' => ['/admin/category/index']],
+                ['label' => 'Пользователи', 'url' => ['/admin/user/index']],
+                ['label' => 'Роли', 'url' => ['/admin/role/index']],
+                ['label' => 'Меню', 'url' => ['/admin/menu/index']],
+                ['label' => 'Тэги', 'url' => ['/admin/tag/index']],
+                ['label' => 'Выход', 'url' => ['/auth/logout']]
             ],
         ]);
         NavBar::end();
@@ -56,7 +57,7 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+            <p class="pull-left">&copy; Мой блог <?= date('Y') ?></p>
 
             <p class="pull-right"><?= Yii::powered() ?></p>
         </div>

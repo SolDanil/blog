@@ -4,7 +4,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ArticleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->title = 'Articles';
+$this->title = 'Статьи';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-index">
@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Article', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать Статью', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:html',
-//            'content:html',
+            // 'content:html',
             'date',
             [
                 'format' => 'html',

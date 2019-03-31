@@ -10,6 +10,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\User;
 use app\models\Menu;
+use \yii\db\Query;
 PublicAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -44,13 +45,30 @@ PublicAsset::register($this);
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav text-uppercase">
-<!--                        --><?// print_r(Menu::find()->asArray()->all());die;
+                        <?php
 
                         foreach ( Menu::find()->asArray()->all() as $menu ){ ?>
-                        <li><a data-toggle="dropdown" class="dropdown-toggle" href="<?=$menu['url']?>"><?=$menu['title']?></a>
+                            <li><a data-toggle="dropdown" class="<?=(($menu['menu_from']!='')?'dropdown-submenu ':'')?>dropdown-toggle" href="<?=$menu['url']?>"><?=$menu['title']?></a>
+                                <?php if($menu['menu_from']!='') {?>
 
-                        </li>
-                        <? }?>
+                                    <ul class="dropdown-menu">
+                                        <?php $sub=explode('|', $menu['menu_from']);
+
+                                        
+                                            $submenu = (new Query)->from($sub[0])->where($sub[1])->all();
+
+                                            foreach ($submenu as $v) {?>
+                                                <li><a data-toggle="dropdown" class="dropdown-toggle" href="/site/<?=$sub[0]?>?id=<?=$v['id']?>"><?=$v['title']?></a>
+                                                
+
+
+                                           <?php } ?>
+                                    </ul>
+
+                                <?php }?>
+
+                            </li>
+                        <?php }?>
                     </ul>
                     <div class="i_con">
                         <ul class="nav navbar-nav text-uppercase">
@@ -71,7 +89,7 @@ PublicAsset::register($this);
 
                             <li><?= Html::beginForm(['/auth/logout'], 'post')
                                 . Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->name . ')',
+                                    'Выход (' . Yii::$app->user->identity->name . ')',
                                     ['class' => 'btn btn-link logout', 'style'=>"padding-top:10px;margin: 7px 0px;"]
                                 )
                                 . Html::endForm() ?></li>

@@ -17,6 +17,19 @@ class m190321_121448_create_role_table extends Migration
             'active'=>$this->tinyInteger(4)->defaultValue(1),
             'name'=>$this->string()
         ]);
+		
+		$this->insert('role', [
+            'active' => '1',
+            'name' => 'admin',
+        ]);
+		$this->insert('role', [
+            'active' => '1',
+            'name' => 'author',
+        ]);
+		$this->insert('role', [
+            'active' => '1',
+            'name' => 'user',
+        ]);
     }
 
     /**

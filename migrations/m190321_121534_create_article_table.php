@@ -15,7 +15,7 @@ class m190321_121534_create_article_table extends Migration
         $this->createTable('{{%article}}', [
             'id' => $this->primaryKey(),
             'title'=>$this->string(),
-            'discription'=>$this->text(),
+            'description'=>$this->text(),
             'content'=>$this->text(),
             'date'=>$this->date(),
             'image'=>$this->string(),
@@ -23,11 +23,14 @@ class m190321_121534_create_article_table extends Migration
             'user_id'=>$this->integer(),
             'status'=>$this->integer(),
             'category_id'=>$this->integer()
-
-
-
         ]);
+
+       
+
+
     }
+
+
 
     /**
      * {@inheritdoc}

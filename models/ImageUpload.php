@@ -16,22 +16,17 @@ class ImageUpload extends Model{
     }
     public function uploadFile($currentImage)
     {
-
-//echo'<pre>';
-//        var_dump($this->validate());
-//        var_dump($this->image->extension);
-//        var_dump($this);die;
-//        echo'</pre>';
         if($this->validate())
         {
             $this->deleteCurrentImage($currentImage);
-//            var_dump($this->saveImage());die;
+
             return $this->saveImage();
         }
     }
     private function getFolder()
     {
-        return Yii::getAlias('@web') . 'uploads/';
+        return Yii::getAlias('@webroot') . '/uploads/';
+		
     }
     private function generateFilename()
     {

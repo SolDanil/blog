@@ -17,7 +17,11 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'date')->textInput() ?>
-    <?=$form->field($model, 'category_id')->dropdownList($category, ['prompt'=>'Select Category','options' => $selected] );?>
+
+    <?= $form->field($model, 'category_id')->dropdownList($category, [
+            'prompt'=>'Выберите категорию',
+            'options' => $selected
+        ] );?>
 
 
     <div class="form-group">

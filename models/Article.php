@@ -3,6 +3,7 @@ namespace app\models;
 use Yii;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use app\component\SendMailToAdmin;
 /**
  * This is the model class for table "article".
  *
@@ -183,21 +184,18 @@ class Article extends \yii\db\ActiveRecord
     }
 
     public function sendMail($email){
-        $body="<h1> Новое статья на блоге</h1>
-                    <ul> 
-                    <li>id статьи:".$this->id."</li>
-                    <li>Заголовок:".$this->title."</li>
-                    <li>Пользователь:".$this->user_id."</li>
-                    <li>Время:".$this->date."</li>
-                    
-                    
-                    </ul>";
-        Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom('st_nikon@mail.ru')
-            ->setSubject('Новая статья на блоге')
-            ->setTextBody($body)
-            ->send();
+        
 
+        Yii::$app->queue->delay(5 * 60)->push( 
+            new SendMailToAdmin([
+                'id' => $this->id,
+                'title' => $this->title,
+                'user_id' => $this->user_id,
+                'date' => $this->date,  
+                'email' => $email,           
+            ])           
+        );
+
+        
     }
 }
