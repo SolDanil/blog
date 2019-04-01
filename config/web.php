@@ -45,7 +45,7 @@ $config = [
 //                'class' => 'Swift_SmtpTransport',
 //                'host' => 'smtp.gmail.com',
 //                'username' => 'premanikon@gmail.com',
-//                'password' => 'Yandex11googlE',
+//                'password' => '****',
 //                'port' => '465',
 //                'encryption' => 'ssl',
 //            ],
